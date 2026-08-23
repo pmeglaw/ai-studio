@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lien Ledger
 
-## Getting Started
+Shared per-case medical-lien tracking with a settlement-gate checklist,
+for a California PI firm. Replaces per-paralegal Excel sheets.
 
-First, run the development server:
+Spec: `docs/superpowers/specs/2026-08-22-lien-ledger-design.md`
+Plan: `docs/superpowers/plans/2026-08-22-lien-ledger-v1.md`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Run
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. `npm install`
+2. `.env.local` needs `BETTER_AUTH_SECRET` (openssl rand -hex 32) and
+   `BETTER_AUTH_URL=http://localhost:3100`
+3. One-time: `npx @better-auth/cli migrate --yes`, then seed staff logins:
+   `ALLOW_SIGNUP=1 SEED_PASSWORD='<temp pw>' npx tsx scripts/seed-users.ts`
+4. `npm run dev` → http://localhost:3100
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Statuses
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`asserted → verified → negotiating → reduced → paid` (or `waived`).
+The settlement gate lists liens still `asserted` or `negotiating` —
+those are the ones with unknown validity or amount at disbursement.
+The gate is a checklist; it never blocks anything.
 
-## Learn More
+## Data
 
-To learn more about Next.js, take a look at the following resources:
+Two SQLite files under `data/` (gitignored): `ledger.db` (cases, liens),
+`auth.db` (users, sessions). PHI stays on this machine — no external
+services. Retention: case data purged 5 years after case close, with the
+file (manual for now; see spec Open questions).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`npm test` — money parsing and query/gate logic.
