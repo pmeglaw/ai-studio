@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-ground: #f4f3ef;
+  --color-surface: #fcfbf8;
+  --color-ink: #22252a;
+  --color-muted: #6d7178;
+  --color-line: #dcdad2;
+  --color-navy: #27415e;
+  --color-navy-deep: #1c3049;
+  --color-oxblood: #7c2d2d;
+  --color-resolved: #3d6b4f;
+
+  --font-sans: var(--font-source-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-ink);
+}
