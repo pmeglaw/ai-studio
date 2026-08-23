@@ -61,4 +61,9 @@ describe("liens", () => {
       updateLien(lien.id, { status: "settled" as never }),
     ).toThrow();
   });
+
+  it("rejects a negative amount at the DB layer", () => {
+    const c = createCase("D");
+    expect(() => addLien(c.id, "X", -100)).toThrow();
+  });
 });
