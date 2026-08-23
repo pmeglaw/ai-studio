@@ -11,7 +11,7 @@ Plan: `docs/superpowers/plans/2026-08-22-lien-ledger-v1.md`
 1. `npm install`
 2. `.env.local` needs `BETTER_AUTH_SECRET` (openssl rand -hex 32) and
    `BETTER_AUTH_URL=http://localhost:3100`
-3. One-time: `npx @better-auth/cli migrate --yes`, then seed staff logins:
+3. One-time: `npx --yes auth@latest migrate --yes`, then seed staff logins:
    `ALLOW_SIGNUP=1 SEED_PASSWORD='<temp pw>' npx tsx scripts/seed-users.ts`
 4. `npm run dev` → http://localhost:3100
 
