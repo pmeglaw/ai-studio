@@ -34,13 +34,24 @@ export default async function GatePage({
       </div>
 
       {open.length === 0 ? (
-        <div className="rounded-md border border-resolved/40 bg-resolved/5 p-6">
-          <p className="font-semibold text-resolved">Gate is clear.</p>
-          <p className="mt-1 text-sm text-muted">
-            All {total.length} lien{total.length === 1 ? "" : "s"} on this case
-            are verified, reduced, paid, or waived. Nothing is blocking disbursement.
-          </p>
-        </div>
+        total.length === 0 ? (
+          <div className="rounded-md border border-line bg-surface p-6">
+            <p className="font-semibold text-ink">No liens logged.</p>
+            <p className="mt-1 text-sm text-muted">
+              Nothing has been entered on this case. Confirm no provider liens
+              exist before disbursement.
+            </p>
+          </div>
+        ) : (
+          <div className="rounded-md border border-resolved/40 bg-resolved/5 p-6">
+            <p className="font-semibold text-resolved">Gate is clear.</p>
+            <p className="mt-1 text-sm text-muted">
+              All {total.length} lien{total.length === 1 ? " is" : "s are"} on
+              this case verified, reduced, paid, or waived. Nothing is blocking
+              disbursement.
+            </p>
+          </div>
+        )
       ) : (
         <div className="overflow-x-auto rounded-md border border-oxblood/40 bg-surface">
           <table className="w-full text-sm">

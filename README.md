@@ -14,6 +14,8 @@ Plan: `docs/superpowers/plans/2026-08-22-lien-ledger-v1.md`
 3. One-time: `npx --yes auth@latest migrate --yes`, then seed staff logins:
    `ALLOW_SIGNUP=1 SEED_PASSWORD='<temp pw>' npx tsx scripts/seed-users.ts`
 4. `npm run dev` → http://localhost:3100
+5. For day-to-day office use, serve the production build instead:
+   `npm run build && npm start` (also on port 3100)
 
 ## Statuses
 
